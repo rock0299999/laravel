@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	$data = ['name' => 'Rock'];
+    //return view('news');
+    return view('home.index',$data);
 });
