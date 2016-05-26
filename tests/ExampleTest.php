@@ -15,5 +15,5 @@ class ExampleTest extends TestCase
     {
         $this->visit('/')
              ->see('Laravel 5');
-    }
+    }//tttt
 }
