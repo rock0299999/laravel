@@ -53,4 +53,7 @@ Route::match(['get', 'post'], '/', function () {
 			return $name;
 		});	
 */
+	//rock add excel 
+	Route::get('excel/export','ExcelController@export');
+	Route::get('excel/import','ExcelController@import');
  
