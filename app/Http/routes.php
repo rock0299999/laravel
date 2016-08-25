@@ -36,6 +36,9 @@ Route::group(['middleware' => ['web']], function () {
 
 });
 */
+
+Route::get('/AA', 'Test2Controller@index');
+
 Route::match(['get', 'post'], '/', function () {
 	return 'Hello World'.$_GET['get'];
 });
