@@ -4,16 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 
-use App\Http\Controllers\Controller;
+//use App\Http\Controllers\Controller;
 
 use Excel;
 
 class ExcelController extends Controller
 {
+	public function index(){
+		return view('excel.index');
+	}
+	
 	//Excel文件匯出
 	public function export(){
 		$cellData = [
@@ -33,40 +38,32 @@ class ExcelController extends Controller
 	
 	//Excel文件匯入
 	public function import(){
-		$filePath = 'storage/exports/ttt.xls';
+		$this->rtndata ['status'] = 0;
+		
+		if (Input::hasFile('file')) {
+			//取得檔案路徑
+			$filePath = Input::file('file')->getRealPath();			
+		} else {
+			$this->rtndata ['message'] = '檔案不存在';
+			return response ()->json ( $this->rtndata );
+		}		
+
 		Excel::load($filePath, function($reader) {
 			$excelData = $reader->all();
-			//dd($excelData);
+
 			foreach ( $excelData as $v){
 				$data = [];
-				/* 方法一 寫死
-				$data ['test1'] = $v->test1;
-				$data ['test2'] = $v->test2;
-				$data ['test3'] = $v->test3;
-				$data ['test4'] = $v->test4;
-				$data ['test5'] = $v->test5;
-				$data ['test6'] = $v->test6;
-				$data ['test7'] = $v->test7;
-				$data ['test8'] = $v->test8;
-				$data ['test9'] = $v->test9;
-				$data ['test10'] = $v->test10;
-				*/
-				/*for ($i=1;$i<=10;$i++){ //方法二  跑十個欄位
-					//echo $i;
-					$vv = 'test'.$i;
-					$data [$vv]  = ($v->$vv)?$v->$vv:"";
-					//echo $data [$vv]  = ($v->$vv)?$v->$vv:"";
-					//echo "<BR>";
-					//dump( $data ['test'.$i] ."<br>");
-				}*/
-				//方法三 隨便他跑
+				//迴圈丟進data
 				foreach ( $v as $kk => $vv){
 					$data[$kk] = ($vv)?$vv:"";
-				}				
+				}
 				DB::table ( 'test' )->insert ( $data );
-				//dump($data);
 			}
 			
-		});		
-	}	
+			$this->rtndata ['status'] = 1;
+			$this->rtndata ['message'] = "確認";
+		});
+			
+		return response ()->json ( $this->rtndata );
+	}
 }

@@ -37,10 +37,12 @@ Route::group(['middleware' => ['web']], function () {
 });
 */
 
-Route::get('/AA', 'Test2Controller@index');
+Route::get('AA', 'Test2Controller@index');
+
+Route::get('EX/IN', 'ExcelController@index');//excel
 
 Route::match(['get', 'post'], '/', function () {
-	return 'Hello World'.$_GET['get'];
+	return 'Hello World';
 });
 /*	Route::get('user/{id?}', function ($id = null) {
 		return 'User '.$id;
@@ -54,6 +56,6 @@ Route::match(['get', 'post'], '/', function () {
 		});	
 */
 	//rock add excel 
-	Route::get('excel/export','ExcelController@export');
-	Route::get('excel/import','ExcelController@import');
+	Route::get('EX/ET','ExcelController@export');
+	Route::any('EX/IT','ExcelController@import');
  
