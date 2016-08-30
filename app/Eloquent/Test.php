@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SysMenu extends Model {
+class Test extends Model
+{
+    //
 	public $timestamps = false;
-	protected $table = 'sys_menu';
-	protected $primaryKey = 'iId';
+	protected $table = 'test'; 
 }

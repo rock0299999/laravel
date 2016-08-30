@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Results;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
-use App\SysNav;
+use App\Eloquent\SysNav;
 
 class IndexController extends Controller {
 	public $type = 3;
@@ -45,11 +45,15 @@ class IndexController extends Controller {
 	public function doAdd() {
 		$map ['iType'] = $this->type;
 		$maxRank = SysNav::where ( $map )->max ( 'iRank' );
+
 		$Dao = new SysNav ();
+
 		$Dao->iType = $this->type;
 		$Dao->vTitle = (Input::has ( 'vTitle' )) ? Input::get ( 'vTitle' ) : "";
 		$Dao->iDate = (Input::has ( 'vTitle' )) ? strtotime ( Input::get ( 'vTitle' ) ) : time ();
+		
 		$Dao->vImage = $this->_uploadFile ( Input::get ( 'vImage' ) );
+
 		$Dao->vSummary = (Input::has ( 'vSummary' )) ? Input::get ( 'vSummary' ) : "";
 		$Dao->vDetail = (Input::has ( 'vDetail' )) ? Input::get ( 'vDetail' ) : "";
 		$Dao->bShow = (Input::has ( 'bShow' )) ? Input::get ( 'bShow' ) : 0;
@@ -57,6 +61,7 @@ class IndexController extends Controller {
 		$Dao->bTop = (Input::has ( 'bTop' )) ? Input::get ( 'bTop' ) : 0;
 		$Dao->iCreateTime = $Dao->iUpdateTime = time ();
 		$Dao->iRank = $maxRank + 1;
+		
 		if ($Dao->save ()) {
 			$this->rtndata ['id'] = $Dao->iId;
 			$this->rtndata ['status'] = 1;

@@ -31,14 +31,6 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">刊登日期</label>
-							<div class="col-sm-10">
-								<div class="col-sm-6">
-									<input type="text" class="form-control datepicker" id="vDate" value="">
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
 							<label class="col-md-2 control-label">主要照片</label>
 							<div class="col-md-10">
 								<img id="Image" data-data="" style="width: 25%; min-width: 100px; max-width:150px; height: auto" src="{{asset('web_assets/img/empty.jpg')}}"> 
@@ -82,7 +74,7 @@
 <!-- end -->
 <!-- Page-Level Scripts -->
 <script>
-var return_url = "{{ url('results')}}";
+var return_url = "{{ url('results/add')}}";
 var doadd_url = "{{ url('results/doadd')}}";
     $(document).ready(function() {
 
@@ -92,17 +84,17 @@ var doadd_url = "{{ url('results/doadd')}}";
         $("#sendSave").click(function() {
             var data = {"_token":"{{ csrf_token() }}"};
             data.vTitle = $("#vTitle").val();
-            data.vDate = $("#vDate").val();
+
             if( $('#Image').data('data') ==""){
             	swal("{{trans('_web.notice')}}", "圖片不得為空", "error");
             	return false;
             }
             data.vImage =  $('#Image').data('data');
-            data.vSummary = $("#vSummary").val();
+           /* data.vSummary = $("#vSummary").val();
             data.vDetail = $('#vDetail').code(); 
             data.bShow = $("input[name=bShow]:checked").val();
             data.bOpen = $("input[name=bOpen]:checked").val();
-            data.bTop = $("input[name=bTop]:checked").val();
+            data.bTop = $("input[name=bTop]:checked").val();*/
     		$.ajax({
     			url : doadd_url,
     			data : data,
