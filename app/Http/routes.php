@@ -58,4 +58,16 @@ Route::match(['get', 'post'], '/', function () {
 	//rock add excel 
 	Route::get('EX/ET','ExcelController@export');
 	Route::any('EX/IT','ExcelController@import');
- 
+
+	//rock test image update  20160830
+
+	
+	
+ 		Route::group ( [ 
+				'prefix' => 'results',
+				'namespace' => 'Results' 
+		], function () {
+			Route::get ( '', 'IndexController@index' );
+			Route::get ( 'add', 'IndexController@add' );
+			Route::post ( 'doadd', 'IndexController@doAdd' );
+		});
